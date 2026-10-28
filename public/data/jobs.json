@@ -1,0 +1,123 @@
+
+[
+  {
+    "id": "job-1",
+    "title": "Frontend Developer",
+    "company": "TechNova",
+    "companyLogo": "/images/companies/technova.png",
+    "location": "Ahmedabad, Gujarat",
+    "type": "Full-time",
+    "workMode": "Remote",
+    "category": "Engineering",
+    "experience": "1-3 years",
+    "salary": "₹4-8 LPA",
+    "postedAt": "2026-10-25",
+    "tags": ["React", "JavaScript", "Tailwind CSS"],
+    "description": "Build responsive and accessible user interfaces using modern frontend technologies.",
+    "requirements": [
+      "Knowledge of HTML, CSS and JavaScript",
+      "Experience with React",
+      "Understanding of responsive design"
+    ]
+  },
+  {
+    "id": "job-2",
+    "title": "React Developer",
+    "company": "PixelCraft",
+    "companyLogo": "/images/companies/pixelcraft.png",
+    "location": "Bengaluru, Karnataka",
+    "type": "Full-time",
+    "workMode": "Hybrid",
+    "category": "Engineering",
+    "experience": "1-2 years",
+    "salary": "₹5-9 LPA",
+    "postedAt": "2026-10-24",
+    "tags": ["React", "Vite", "Git"],
+    "description": "Develop reusable React components and maintain high-quality frontend code.",
+    "requirements": [
+      "Understanding of React components and hooks",
+      "Knowledge of JavaScript ES6+",
+      "Basic Git workflow"
+    ]
+  },
+  {
+    "id": "job-3",
+    "title": "UI/UX Designer",
+    "company": "DesignOrbit",
+    "companyLogo": "/images/companies/designorbit.png",
+    "location": "Ahmedabad, Gujarat",
+    "type": "Full-time",
+    "workMode": "On-site",
+    "category": "Design",
+    "experience": "0-2 years",
+    "salary": "₹3-6 LPA",
+    "postedAt": "2026-10-22",
+    "tags": ["Figma", "Wireframes", "Prototyping"],
+    "description": "Create intuitive digital experiences and responsive interface designs.",
+    "requirements": [
+      "Knowledge of Figma",
+      "Understanding of UI/UX principles",
+      "Ability to create wireframes and prototypes"
+    ]
+  },
+  {
+    "id": "job-4",
+    "title": "Python Developer Intern",
+    "company": "CodeBridge",
+    "companyLogo": "/images/companies/codebridge.png",
+    "location": "Pune, Maharashtra",
+    "type": "Internship",
+    "workMode": "Remote",
+    "category": "Engineering",
+    "experience": "Fresher",
+    "salary": "₹10k-20k/month",
+    "postedAt": "2026-10-20",
+    "tags": ["Python", "Django", "SQL"],
+    "description": "Assist in developing and testing Python applications under senior developers.",
+    "requirements": [
+      "Basic Python programming",
+      "Understanding of databases",
+      "Willingness to learn and collaborate"
+    ]
+  },
+  {
+    "id": "job-5",
+    "title": "Product Designer",
+    "company": "CloudPeak",
+    "companyLogo": "/images/companies/cloudpeak.png",
+    "location": "Mumbai, Maharashtra",
+    "type": "Contract",
+    "workMode": "Hybrid",
+    "category": "Design",
+    "experience": "2-4 years",
+    "salary": "₹8-12 LPA",
+    "postedAt": "2026-10-18",
+    "tags": ["Product Design", "Figma", "Design Systems"],
+    "description": "Design product experiences and collaborate with engineering and product teams.",
+    "requirements": [
+      "Experience with design systems",
+      "Strong prototyping skills",
+      "Ability to collaborate across teams"
+    ]
+  },
+  {
+    "id": "job-6",
+    "title": "QA Engineer",
+    "company": "QualityWorks",
+    "companyLogo": "/images/companies/qualityworks.png",
+    "location": "Hyderabad, Telangana",
+    "type": "Full-time",
+    "workMode": "On-site",
+    "category": "Quality Assurance",
+    "experience": "1-3 years",
+    "salary": "₹4-7 LPA",
+    "postedAt": "2026-10-16",
+    "tags": ["Testing", "JavaScript", "Automation"],
+    "description": "Test web applications, identify defects and help maintain product quality.",
+    "requirements": [
+      "Understanding of software testing",
+      "Knowledge of test cases and bug reporting",
+      "Attention to detail"
+    ]
+  }
+]
