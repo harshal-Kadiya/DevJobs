@@ -1,5 +1,6 @@
 
 import { Link } from "react-router-dom";
+import { motion } from "motion/react";
 import { useJobs } from "../../context/JobsContext.jsx";
 
 function JobCard({ job }) {
@@ -13,7 +14,16 @@ function JobCard({ job }) {
   const tags = Array.isArray(job.tags) ? job.tags : [];
 
   return (
-    <article className="flex h-full min-w-0 flex-col rounded-2xl border border-border bg-white p-5 shadow-card transition-shadow duration-200 hover:shadow-lg motion-safe:hover:-translate-y-1 dark:border-slate-700 dark:bg-slate-900 sm:p-6">
+    <motion.article
+      initial={{ opacity: 0, y: 16 }}
+      animate={{ opacity: 1, y: 0 }}
+      whileHover={{ y: -4 }}
+      transition={{
+        opacity: { duration: 0.3, ease: "easeOut" },
+        y: { duration: 0.2, ease: "easeOut" },
+      }}
+      className="flex h-full min-w-0 flex-col rounded-2xl border border-border bg-white p-5 shadow-card transition-shadow duration-200 hover:shadow-lg motion-reduce:transform-none dark:border-slate-700 dark:bg-slate-900 sm:p-6"
+    >
       {/* Company and Job Type */}
       <div className="mb-5 flex items-start justify-between gap-3">
         <div
@@ -28,7 +38,7 @@ function JobCard({ job }) {
             {job.type || "Job"}
           </span>
 
-          <button
+          <motion.button
             type="button"
             onClick={() => toggleSavedJob(job.id)}
             aria-pressed={saved}
@@ -38,6 +48,8 @@ function JobCard({ job }) {
                 : `Save ${title}`
             }
             title={saved ? "Remove saved job" : "Save job"}
+            whileTap={{ scale: 0.9 }}
+            transition={{ duration: 0.15 }}
             className={`flex h-10 w-10 shrink-0 items-center justify-center rounded-lg border transition-colors focus-visible:outline-none focus-visible:ring-4 ${
               saved
                 ? "border-blue-200 bg-blue-50 text-primary focus-visible:ring-blue-100 dark:border-blue-800 dark:bg-blue-950 dark:text-blue-300 dark:focus-visible:ring-blue-900/50"
@@ -58,7 +70,7 @@ function JobCard({ job }) {
                 d="M6 4.75A1.75 1.75 0 0 1 7.75 3h8.5A1.75 1.75 0 0 1 18 4.75V21l-6-4-6 4V4.75Z"
               />
             </svg>
-          </button>
+          </motion.button>
         </div>
       </div>
 
@@ -110,13 +122,20 @@ function JobCard({ job }) {
         <Link
           to={`/jobs/${job.id}`}
           aria-label={`View details for ${title}`}
-          className="inline-flex items-center gap-2 rounded-lg font-semibold text-primary transition-colors hover:text-primary-dark focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-blue-100 dark:focus-visible:ring-blue-900/50"
+          className="group inline-flex items-center gap-2 rounded-lg font-semibold text-primary transition-colors hover:text-primary-dark focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-blue-100 dark:focus-visible:ring-blue-900/50"
         >
           View details
-          <span aria-hidden="true">→</span>
+          <motion.span
+            aria-hidden="true"
+            className="inline-block"
+            whileHover={{ x: 3 }}
+            transition={{ duration: 0.15 }}
+          >
+            →
+          </motion.span>
         </Link>
       </div>
-    </article>
+    </motion.article>
   );
 }
 

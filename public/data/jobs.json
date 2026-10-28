@@ -119,5 +119,85 @@
       "Knowledge of test cases and bug reporting",
       "Attention to detail"
     ]
+  },
+  {
+    "id": "job-7",
+    "title": "Node.js Backend Developer",
+    "company": "WebStack Solutions",
+    "companyLogo": "/images/companies/webstack.png",
+    "location": "Ahmedabad, Gujarat",
+    "type": "Full-time",
+    "workMode": "Hybrid",
+    "category": "Engineering",
+    "experience": "1-3 years",
+    "salary": "₹5-8 LPA",
+    "postedAt": "2026-10-28",
+    "tags": ["Node.js", "Express", "MongoDB"],
+    "description": "Develop and maintain backend services and REST APIs for web applications.",
+    "requirements": [
+      "Knowledge of Node.js and Express",
+      "Understanding of REST API development",
+      "Basic knowledge of MongoDB"
+    ]
+  },
+  {
+    "id": "job-8",
+    "title": "Python Developer",
+    "company": "DataNest Technologies",
+    "companyLogo": "/images/companies/datanest.png",
+    "location": "Gandhinagar, Gujarat",
+    "type": "Full-time",
+    "workMode": "On-site",
+    "category": "Engineering",
+    "experience": "0-2 years",
+    "salary": "₹4-7 LPA",
+    "postedAt": "2026-10-27",
+    "tags": ["Python", "Django", "MySQL"],
+    "description": "Build web application features and maintain backend functionality using Python and Django.",
+    "requirements": [
+      "Knowledge of Python fundamentals",
+      "Basic understanding of Django",
+      "Familiarity with SQL databases"
+    ]
+  },
+  {
+    "id": "job-9",
+    "title": "Frontend Developer Intern",
+    "company": "CreativePixel Studio",
+    "companyLogo": "/images/companies/creativepixel.png",
+    "location": "Surat, Gujarat",
+    "type": "Internship",
+    "workMode": "Remote",
+    "category": "Engineering",
+    "experience": "Fresher",
+    "salary": "₹8k-12k/month",
+    "postedAt": "2026-10-26",
+    "tags": ["HTML", "CSS", "JavaScript", "React"],
+    "description": "Help develop responsive web pages and reusable UI components under the guidance of senior developers.",
+    "requirements": [
+      "Basic knowledge of HTML and CSS",
+      "Understanding of JavaScript",
+      "Interest in learning React"
+    ]
+  },
+  {
+    "id": "job-10",
+    "title": "UI/UX Designer",
+    "company": "DesignWave",
+    "companyLogo": "/images/companies/designwave.png",
+    "location": "Mumbai, Maharashtra",
+    "type": "Full-time",
+    "workMode": "Hybrid",
+    "category": "Design",
+    "experience": "1-3 years",
+    "salary": "₹4-7 LPA",
+    "postedAt": "2026-10-25",
+    "tags": ["Figma", "UI Design", "Prototyping"],
+    "description": "Create user-friendly interfaces, prototypes, and consistent design experiences for web products.",
+    "requirements": [
+      "Knowledge of Figma",
+      "Understanding of UI/UX principles",
+      "Ability to create interactive prototypes"
+    ]
   }
 ]

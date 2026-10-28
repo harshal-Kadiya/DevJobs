@@ -1,6 +1,7 @@
 
 import { useEffect, useMemo, useState } from "react";
 import { Link } from "react-router-dom";
+import { AnimatePresence, motion } from "motion/react";
 import JobCard from "../../components/jobs/JobCard.jsx";
 import { useJobs } from "../../context/JobsContext.jsx";
 
@@ -47,17 +48,33 @@ function SavedJobs() {
   }
 
   return (
-    <main className="min-h-screen bg-surface px-4 py-10 text-heading transition-colors duration-200 dark:bg-slate-950 dark:text-slate-100 sm:px-6 lg:px-8">
+    <motion.main
+      initial={{ opacity: 0, y: 10 }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{ duration: 0.3, ease: "easeOut" }}
+      className="min-h-screen bg-surface px-4 py-10 text-heading transition-colors duration-200 dark:bg-slate-950 dark:text-slate-100 sm:px-6 lg:px-8"
+    >
       <div className="mx-auto max-w-7xl">
-        <Link
-          to="/"
-          className="inline-flex items-center gap-2 rounded-lg text-sm font-semibold text-primary transition-colors hover:text-primary-dark focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary"
+        <motion.div
+          initial={{ opacity: 0, x: -8 }}
+          animate={{ opacity: 1, x: 0 }}
+          transition={{ duration: 0.25 }}
         >
-          <span aria-hidden="true">←</span>
-          Back to jobs
-        </Link>
+          <Link
+            to="/"
+            className="inline-flex items-center gap-2 rounded-lg text-sm font-semibold text-primary transition-colors hover:text-primary-dark focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary"
+          >
+            <span aria-hidden="true">←</span>
+            Back to jobs
+          </Link>
+        </motion.div>
 
-        <header className="mb-8 mt-6">
+        <motion.header
+          initial={{ opacity: 0, y: 12 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.35, delay: 0.05 }}
+          className="mb-8 mt-6"
+        >
           <p className="mb-2 text-sm font-semibold uppercase tracking-widest text-primary">
             Your career shortlist
           </p>
@@ -70,10 +87,12 @@ function SavedJobs() {
             Keep track of opportunities that interest you and revisit them
             whenever you are ready.
           </p>
-        </header>
+        </motion.header>
 
         {loading ? (
-          <div
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
             className="rounded-2xl border border-border bg-white px-6 py-16 text-center dark:border-slate-700 dark:bg-slate-900"
             role="status"
             aria-live="polite"
@@ -85,9 +104,11 @@ function SavedJobs() {
             <p className="mt-2 text-sm text-muted dark:text-slate-400">
               Please wait while we load the opportunities.
             </p>
-          </div>
+          </motion.div>
         ) : error ? (
-          <div
+          <motion.div
+            initial={{ opacity: 0, y: 8 }}
+            animate={{ opacity: 1, y: 0 }}
             className="rounded-2xl border border-red-200 bg-white p-6 text-center dark:border-red-900 dark:bg-slate-900 sm:p-8"
             role="alert"
           >
@@ -105,15 +126,23 @@ function SavedJobs() {
             >
               Back to job listings
             </Link>
-          </div>
+          </motion.div>
         ) : savedJobs.length === 0 ? (
-          <div className="rounded-2xl border border-dashed border-border bg-white px-6 py-16 text-center dark:border-slate-700 dark:bg-slate-900">
-            <div
+          <motion.div
+            initial={{ opacity: 0, y: 12 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.3 }}
+            className="rounded-2xl border border-dashed border-border bg-white px-6 py-16 text-center dark:border-slate-700 dark:bg-slate-900"
+          >
+            <motion.div
+              initial={{ scale: 0.8 }}
+              animate={{ scale: 1 }}
+              transition={{ duration: 0.25 }}
               className="mx-auto flex h-14 w-14 items-center justify-center rounded-full bg-blue-50 text-2xl dark:bg-blue-950/60"
               aria-hidden="true"
             >
               ♡
-            </div>
+            </motion.div>
 
             <h2 className="mt-5 text-xl font-bold text-heading dark:text-slate-100">
               No saved jobs yet
@@ -124,16 +153,23 @@ function SavedJobs() {
               button on a job card, and it will appear here.
             </p>
 
-            <Link
-              to="/"
-              className="mt-6 inline-flex rounded-xl bg-primary px-5 py-3 text-sm font-semibold text-white transition-colors hover:bg-primary-dark focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-blue-100 dark:focus-visible:ring-blue-900/50"
-            >
-              Explore jobs
-            </Link>
-          </div>
+            <motion.div whileTap={{ scale: 0.97 }} className="mt-6 inline-flex">
+              <Link
+                to="/"
+                className="inline-flex rounded-xl bg-primary px-5 py-3 text-sm font-semibold text-white transition-colors hover:bg-primary-dark focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-blue-100 dark:focus-visible:ring-blue-900/50"
+              >
+                Explore jobs
+              </Link>
+            </motion.div>
+          </motion.div>
         ) : (
           <>
-            <div className="mb-5 flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
+            <motion.div
+              initial={{ opacity: 0, y: 8 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.25 }}
+              className="mb-5 flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between"
+            >
               <p
                 className="text-sm text-muted dark:text-slate-400"
                 aria-live="polite"
@@ -144,87 +180,123 @@ function SavedJobs() {
                 saved {savedJobs.length === 1 ? "job" : "jobs"}
               </p>
 
-              <button
+              <motion.button
                 type="button"
                 onClick={() => setShowClearConfirm(true)}
+                whileTap={{ scale: 0.97 }}
                 className="self-start rounded-lg border border-red-200 px-4 py-2.5 text-sm font-semibold text-red-600 transition-colors hover:bg-red-50 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-red-500 dark:border-red-900 dark:text-red-400 dark:hover:bg-red-950/40 sm:self-auto"
               >
                 Clear saved jobs
-              </button>
-            </div>
+              </motion.button>
+            </motion.div>
 
-            <section
+            <motion.section
               aria-label="Your saved job listings"
+              initial="hidden"
+              animate="visible"
+              variants={{
+                hidden: {},
+                visible: {
+                  transition: {
+                    staggerChildren: 0.08,
+                  },
+                },
+              }}
               className="grid gap-5 sm:grid-cols-2 lg:grid-cols-3"
             >
               {savedJobs.map((job) => (
-                <JobCard key={job.id} job={job} />
+                <motion.div
+                  key={job.id}
+                  variants={{
+                    hidden: { opacity: 0, y: 12 },
+                    visible: {
+                      opacity: 1,
+                      y: 0,
+                      transition: { duration: 0.3 },
+                    },
+                  }}
+                >
+                  <JobCard job={job} />
+                </motion.div>
               ))}
-            </section>
+            </motion.section>
           </>
         )}
       </div>
 
-      {showClearConfirm && (
-        <div
-          className="fixed inset-0 z-[70] flex items-center justify-center bg-slate-950/60 p-4"
-          onMouseDown={(event) => {
-            if (event.target === event.currentTarget) {
-              setShowClearConfirm(false);
-            }
-          }}
-        >
-          <section
-            role="alertdialog"
-            aria-modal="true"
-            aria-labelledby="clear-saved-title"
-            aria-describedby="clear-saved-description"
-            className="w-full max-w-md rounded-2xl border border-border bg-white p-6 shadow-2xl dark:border-slate-700 dark:bg-slate-900"
+      <AnimatePresence>
+        {showClearConfirm && (
+          <motion.div
+            key="clear-saved-modal"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            transition={{ duration: 0.2 }}
+            className="fixed inset-0 z-[70] flex items-center justify-center bg-slate-950/60 p-4"
+            onMouseDown={(event) => {
+              if (event.target === event.currentTarget) {
+                setShowClearConfirm(false);
+              }
+            }}
           >
-            <div
-              className="flex h-12 w-12 items-center justify-center rounded-full bg-red-50 text-xl font-bold text-red-600 dark:bg-red-950/50 dark:text-red-400"
-              aria-hidden="true"
+            <motion.section
+              initial={{ opacity: 0, y: 12, scale: 0.98 }}
+              animate={{ opacity: 1, y: 0, scale: 1 }}
+              exit={{ opacity: 0, y: 8, scale: 0.98 }}
+              transition={{ duration: 0.2 }}
+              role="alertdialog"
+              aria-modal="true"
+              aria-labelledby="clear-saved-title"
+              aria-describedby="clear-saved-description"
+              className="w-full max-w-md rounded-2xl border border-border bg-white p-6 shadow-2xl dark:border-slate-700 dark:bg-slate-900"
             >
-              !
-            </div>
-
-            <h2
-              id="clear-saved-title"
-              className="mt-4 text-xl font-bold text-heading dark:text-slate-100"
-            >
-              Clear all saved jobs?
-            </h2>
-
-            <p
-              id="clear-saved-description"
-              className="mt-3 text-sm leading-6 text-muted dark:text-slate-400"
-            >
-              This will remove all jobs from your saved list. The original job
-              listings will not be deleted, and you can save them again later.
-            </p>
-
-            <div className="mt-6 flex flex-col-reverse gap-3 sm:flex-row sm:justify-end">
-              <button
-                type="button"
-                autoFocus
-                onClick={() => setShowClearConfirm(false)}
-                className="rounded-xl border border-border px-4 py-3 text-sm font-semibold transition-colors hover:bg-slate-50 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary dark:border-slate-700 dark:text-slate-100 dark:hover:bg-slate-800"
+              <div
+                className="flex h-12 w-12 items-center justify-center rounded-full bg-red-50 text-xl font-bold text-red-600 dark:bg-red-950/50 dark:text-red-400"
+                aria-hidden="true"
               >
-                Cancel
-              </button>
+                !
+              </div>
 
-              <button
-                type="button"
-                onClick={handleClearSavedJobs}
-                className="rounded-xl bg-red-600 px-4 py-3 text-sm font-semibold text-white transition-colors hover:bg-red-700 focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-red-200"
+              <h2
+                id="clear-saved-title"
+                className="mt-4 text-xl font-bold text-heading dark:text-slate-100"
               >
-                Yes, Clear All
-              </button>
-            </div>
-          </section>
-        </div>
-      )}
-    </main>
+                Clear all saved jobs?
+              </h2>
+
+              <p
+                id="clear-saved-description"
+                className="mt-3 text-sm leading-6 text-muted dark:text-slate-400"
+              >
+                This will remove all jobs from your saved list. The original job
+                listings will not be deleted, and you can save them again later.
+              </p>
+
+              <div className="mt-6 flex flex-col-reverse gap-3 sm:flex-row sm:justify-end">
+                <motion.button
+                  type="button"
+                  autoFocus
+                  onClick={() => setShowClearConfirm(false)}
+                  whileTap={{ scale: 0.97 }}
+                  className="rounded-xl border border-border px-4 py-3 text-sm font-semibold transition-colors hover:bg-slate-50 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary dark:border-slate-700 dark:text-slate-100 dark:hover:bg-slate-800"
+                >
+                  Cancel
+                </motion.button>
+
+                <motion.button
+                  type="button"
+                  onClick={handleClearSavedJobs}
+                  whileTap={{ scale: 0.97 }}
+                  className="rounded-xl bg-red-600 px-4 py-3 text-sm font-semibold text-white transition-colors hover:bg-red-700 focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-red-200"
+                >
+                  Yes, Clear All
+                </motion.button>
+              </div>
+            </motion.section>
+          </motion.div>
+        )}
+      </AnimatePresence>
+    </motion.main>
   );
 }
 

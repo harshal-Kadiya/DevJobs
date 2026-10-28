@@ -19,6 +19,40 @@ function getSavedJobIds() {
   return Array.isArray(ids) ? ids : [];
 }
 
+function mergeJobs(originalJobs, storedJobs) {
+  if (!Array.isArray(storedJobs)) {
+    return originalJobs;
+  }
+
+  const storedJobsMap = new Map(
+    storedJobs.map((job) => [String(job.id), job])
+  );
+
+  const mergedJobs = originalJobs.map((originalJob) => {
+    const storedJob = storedJobsMap.get(String(originalJob.id));
+
+    if (!storedJob) {
+      return originalJob;
+    }
+
+    return {
+      ...originalJob,
+      ...storedJob,
+      id: originalJob.id,
+    };
+  });
+
+  const originalIds = new Set(
+    originalJobs.map((job) => String(job.id))
+  );
+
+  const adminAddedJobs = storedJobs.filter(
+    (job) => !originalIds.has(String(job.id))
+  );
+
+  return [...adminAddedJobs, ...mergedJobs];
+}
+
 export function JobsProvider({ children }) {
   const [jobs, setJobs] = useState([]);
   const [originalJobs, setOriginalJobs] = useState([]);
@@ -26,7 +60,6 @@ export function JobsProvider({ children }) {
   const [error, setError] = useState("");
   const [savedIds, setSavedIds] = useState(getSavedJobIds);
 
-  // Load original jobs and previously stored admin jobs.
   useEffect(() => {
     let isMounted = true;
 
@@ -56,11 +89,7 @@ export function JobsProvider({ children }) {
           null
         );
 
-        if (Array.isArray(storedJobs)) {
-          setJobs(storedJobs);
-        } else {
-          setJobs(data);
-        }
+        setJobs(mergeJobs(data, storedJobs));
       } catch (err) {
         if (isMounted) {
           setError(
@@ -83,7 +112,6 @@ export function JobsProvider({ children }) {
     };
   }, []);
 
-  // Persist admin job changes.
   useEffect(() => {
     if (loading || error) return;
 
@@ -99,17 +127,14 @@ export function JobsProvider({ children }) {
     }
   }, [jobs, loading, error]);
 
-  // Persist saved job IDs.
   useEffect(() => {
     setStorageItem(STORAGE_KEYS.SAVED_JOBS, savedIds);
   }, [savedIds]);
 
-  // Add a new job.
   function addJob(job) {
     setJobs((previousJobs) => [job, ...previousJobs]);
   }
 
-  // Update an existing job without changing its ID.
   function updateJob(jobId, updatedJob) {
     setJobs((previousJobs) =>
       previousJobs.map((job) =>
@@ -120,7 +145,6 @@ export function JobsProvider({ children }) {
     );
   }
 
-  // Delete a job and remove it from saved jobs.
   function deleteJob(jobId) {
     setJobs((previousJobs) =>
       previousJobs.filter(
@@ -135,7 +159,6 @@ export function JobsProvider({ children }) {
     );
   }
 
-  // Restore original jobs from public/data/jobs.json.
   function resetJobs() {
     setJobs(originalJobs);
 
@@ -148,17 +171,13 @@ export function JobsProvider({ children }) {
     );
   }
 
-  // Remove all saved jobs.
   function clearSavedJobs() {
     setSavedIds([]);
   }
 
-  // Save or unsave a job.
   function toggleSavedJob(jobId) {
     setSavedIds((previousIds) =>
-      previousIds.some(
-        (id) => String(id) === String(jobId)
-      )
+      previousIds.some((id) => String(id) === String(jobId))
         ? previousIds.filter(
             (id) => String(id) !== String(jobId)
           )
@@ -166,11 +185,8 @@ export function JobsProvider({ children }) {
     );
   }
 
-  // Check whether a job is saved.
   function isJobSaved(jobId) {
-    return savedIds.some(
-      (id) => String(id) === String(jobId)
-    );
+    return savedIds.some((id) => String(id) === String(jobId));
   }
 
   const value = {
@@ -199,9 +215,7 @@ export function useJobs() {
   const context = useContext(JobsContext);
 
   if (!context) {
-    throw new Error(
-      "useJobs must be used inside JobsProvider."
-    );
+    throw new Error("useJobs must be used inside JobsProvider.");
   }
 
   return context;

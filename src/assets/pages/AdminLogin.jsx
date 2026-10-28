@@ -1,6 +1,7 @@
 
 import { useState } from "react";
 import { Link, Navigate, useLocation, useNavigate } from "react-router-dom";
+import { AnimatePresence, motion } from "motion/react";
 
 import { useAuth } from "../../context/AuthContext.jsx";
 
@@ -62,15 +63,32 @@ function AdminLogin() {
   }
 
   return (
-    <main className="flex min-h-[60vh] items-center justify-center bg-surface px-4 py-12 transition-colors duration-200 dark:bg-slate-950 sm:px-6">
-      <section className="w-full max-w-md rounded-2xl border border-border bg-white p-6 shadow-card transition-colors duration-200 dark:border-slate-700 dark:bg-slate-900 sm:p-8">
-        <div className="mb-7 text-center">
-          <div
+    <motion.main
+      initial={{ opacity: 0, y: 10 }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{ duration: 0.3, ease: "easeOut" }}
+      className="flex min-h-[60vh] items-center justify-center bg-surface px-4 py-12 transition-colors duration-200 dark:bg-slate-950 sm:px-6"
+    >
+      <motion.section
+        initial={{ opacity: 0, scale: 0.98 }}
+        animate={{ opacity: 1, scale: 1 }}
+        transition={{ duration: 0.35, delay: 0.05 }}
+        className="w-full max-w-md rounded-2xl border border-border bg-white p-6 shadow-card transition-colors duration-200 dark:border-slate-700 dark:bg-slate-900 sm:p-8"
+      >
+        <motion.div
+          initial={{ opacity: 0, y: 8 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.3, delay: 0.1 }}
+          className="mb-7 text-center"
+        >
+          <motion.div
+            whileHover={{ scale: 1.05 }}
+            transition={{ duration: 0.2 }}
             className="mx-auto flex h-14 w-14 items-center justify-center rounded-2xl bg-blue-50 text-2xl font-bold text-primary dark:bg-blue-950/60 dark:text-blue-300"
             aria-hidden="true"
           >
             D
-          </div>
+          </motion.div>
 
           <p className="mt-5 text-sm font-semibold uppercase tracking-widest text-primary">
             Admin portal
@@ -83,7 +101,7 @@ function AdminLogin() {
           <p className="mt-2 text-sm leading-6 text-muted dark:text-slate-400">
             Sign in to manage job listings on DevJobs.
           </p>
-        </div>
+        </motion.div>
 
         <form onSubmit={handleSubmit} noValidate>
           <div className="mb-5">
@@ -135,34 +153,43 @@ function AdminLogin() {
                 className="min-w-0 flex-1 rounded-xl bg-transparent px-4 py-3 text-sm text-heading outline-none placeholder:text-slate-400 dark:text-slate-100 dark:placeholder:text-slate-500"
               />
 
-              <button
+              <motion.button
                 type="button"
                 onClick={() => setShowPassword((visible) => !visible)}
                 aria-label={showPassword ? "Hide password" : "Show password"}
                 aria-pressed={showPassword}
+                whileTap={{ scale: 0.95 }}
                 className="shrink-0 rounded-r-xl px-4 py-3 text-sm font-semibold text-primary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary dark:focus-visible:ring-offset-slate-800"
               >
                 {showPassword ? "Hide" : "Show"}
-              </button>
+              </motion.button>
             </div>
           </div>
 
-          {error && (
-            <p
-              role="alert"
-              className="mb-5 rounded-xl border border-red-200 bg-red-50 px-4 py-3 text-sm text-red-700 dark:border-red-900 dark:bg-red-950/40 dark:text-red-300"
-            >
-              {error}
-            </p>
-          )}
+          <AnimatePresence mode="wait">
+            {error && (
+              <motion.p
+                key={error}
+                initial={{ opacity: 0, y: -5 }}
+                animate={{ opacity: 1, y: 0 }}
+                exit={{ opacity: 0, y: -5 }}
+                transition={{ duration: 0.2 }}
+                role="alert"
+                className="mb-5 rounded-xl border border-red-200 bg-red-50 px-4 py-3 text-sm text-red-700 dark:border-red-900 dark:bg-red-950/40 dark:text-red-300"
+              >
+                {error}
+              </motion.p>
+            )}
+          </AnimatePresence>
 
-          <button
+          <motion.button
             type="submit"
             disabled={submitting}
+            whileTap={submitting ? undefined : { scale: 0.98 }}
             className="w-full rounded-xl bg-primary px-5 py-3 font-semibold text-white transition-colors hover:bg-primary-dark focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-blue-100 disabled:cursor-not-allowed disabled:opacity-60 dark:focus-visible:ring-blue-900/50"
           >
             {submitting ? "Signing in..." : "Sign in"}
-          </button>
+          </motion.button>
         </form>
 
         <p className="mt-6 text-center text-sm text-muted dark:text-slate-400">
@@ -174,8 +201,8 @@ function AdminLogin() {
             Browse jobs
           </Link>
         </p>
-      </section>
-    </main>
+      </motion.section>
+    </motion.main>
   );
 }
 

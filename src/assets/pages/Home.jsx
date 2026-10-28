@@ -1,5 +1,6 @@
 
 import { useMemo, useState } from "react";
+import { motion } from "motion/react";
 
 import { useJobs } from "../../context/JobsContext.jsx";
 import useDebounce from "../hooks/useDebounce.js";
@@ -7,6 +8,18 @@ import useDebounce from "../hooks/useDebounce.js";
 import SearchBar from "../../components/jobs/SearchBar.jsx";
 import JobFilters from "../../components/jobs/JobFilters.jsx";
 import JobList from "../../components/jobs/JobList.jsx";
+
+const sectionVariants = {
+  hidden: { opacity: 0, y: 16 },
+  visible: {
+    opacity: 1,
+    y: 0,
+    transition: {
+      duration: 0.45,
+      ease: "easeOut",
+    },
+  },
+};
 
 function Home() {
   const { jobs, loading, error } = useJobs();
@@ -108,11 +121,22 @@ function Home() {
   return (
     <main className="min-h-screen bg-surface px-4 py-10 text-heading transition-colors duration-200 dark:bg-slate-950 dark:text-slate-100 sm:px-6 sm:py-12 lg:px-8">
       <div className="mx-auto w-full max-w-7xl">
+
         {/* Hero section */}
-        <section className="mb-10 sm:mb-12">
-          <p className="mb-3 text-xs font-semibold uppercase tracking-widest text-primary sm:text-sm">
+        <motion.section
+          variants={sectionVariants}
+          initial="hidden"
+          animate="visible"
+          className="mb-10 sm:mb-12"
+        >
+          <motion.p
+            initial={{ opacity: 0, x: -10 }}
+            animate={{ opacity: 1, x: 0 }}
+            transition={{ duration: 0.4, delay: 0.1 }}
+            className="mb-3 text-xs font-semibold uppercase tracking-widest text-primary sm:text-sm"
+          >
             Your next opportunity starts here
-          </p>
+          </motion.p>
 
           <h1 className="max-w-3xl text-3xl font-bold tracking-tight sm:text-4xl lg:text-5xl">
             Find a job that fits your future.
@@ -122,15 +146,27 @@ function Home() {
             Explore opportunities, discover great teams, and find your
             next career move.
           </p>
-        </section>
+        </motion.section>
 
         {/* Search */}
-        <div className="mb-5 rounded-2xl border border-border bg-white p-4 shadow-card transition-colors duration-200 dark:border-slate-700 dark:bg-slate-900 sm:p-5">
+        <motion.div
+          variants={sectionVariants}
+          initial="hidden"
+          animate="visible"
+          transition={{ delay: 0.1 }}
+          className="mb-5 rounded-2xl border border-border bg-white p-4 shadow-card transition-colors duration-200 dark:border-slate-700 dark:bg-slate-900 sm:p-5"
+        >
           <SearchBar value={search} onChange={setSearch} />
-        </div>
+        </motion.div>
 
         {/* Filters */}
-        <div className="mb-8">
+        <motion.div
+          variants={sectionVariants}
+          initial="hidden"
+          animate="visible"
+          transition={{ delay: 0.15 }}
+          className="mb-8"
+        >
           <JobFilters
             jobType={jobType}
             setJobType={setJobType}
@@ -143,10 +179,15 @@ function Home() {
             categories={categories}
             onClear={clearFilters}
           />
-        </div>
+        </motion.div>
 
         {/* Results heading */}
-        <div className="mb-5 flex flex-wrap items-center justify-between gap-2">
+        <motion.div
+          initial={{ opacity: 0, y: 10 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.35, delay: 0.2 }}
+          className="mb-5 flex flex-wrap items-center justify-between gap-2"
+        >
           <h2 className="text-lg font-bold sm:text-xl">
             Latest opportunities
           </h2>
@@ -161,7 +202,7 @@ function Home() {
               {filteredJobs.length === 1 ? "job" : "jobs"} found
             </p>
           )}
-        </div>
+        </motion.div>
 
         {/* Job listings */}
         <JobList

@@ -1,5 +1,7 @@
 
 import { Link, useParams } from "react-router-dom";
+import { motion } from "motion/react";
+
 import { useJobs } from "../../context/JobsContext.jsx";
 
 function JobDetails() {
@@ -83,9 +85,11 @@ function JobDetails() {
   const saved = isJobSaved(job.id);
   const title = job.title || "Untitled position";
   const company = job.company || "Company not specified";
+
   const requirements = Array.isArray(job.requirements)
     ? job.requirements
     : [];
+
   const tags = Array.isArray(job.tags) ? job.tags : [];
 
   function handleSaveJob() {
@@ -103,7 +107,12 @@ function JobDetails() {
           Back to jobs
         </Link>
 
-        <article className="mt-6 rounded-2xl border border-border bg-white p-5 shadow-card transition-colors duration-200 dark:border-slate-700 dark:bg-slate-900 sm:p-8 lg:p-10">
+        <motion.article
+          initial={{ opacity: 0, y: 12 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.35, ease: "easeOut" }}
+          className="mt-6 rounded-2xl border border-border bg-white p-5 shadow-card transition-colors duration-200 dark:border-slate-700 dark:bg-slate-900 sm:p-8 lg:p-10"
+        >
           {/* Job Header */}
           <header className="flex flex-col gap-5 sm:flex-row sm:items-start sm:justify-between">
             <div className="flex min-w-0 items-start gap-4">
@@ -234,7 +243,7 @@ function JobDetails() {
 
           {/* Actions */}
           <div className="mt-10 flex flex-col gap-3 border-t border-border pt-6 dark:border-slate-700 sm:flex-row sm:flex-wrap">
-            <button
+            <motion.button
               type="button"
               onClick={handleSaveJob}
               aria-pressed={saved}
@@ -243,6 +252,8 @@ function JobDetails() {
                   ? `Remove ${title} from saved jobs`
                   : `Save ${title}`
               }
+              whileTap={{ scale: 0.97 }}
+              transition={{ duration: 0.15 }}
               className={`inline-flex items-center justify-center rounded-xl px-5 py-3 text-sm font-semibold transition-colors focus-visible:outline-none focus-visible:ring-4 ${
                 saved
                   ? "border border-red-200 text-red-600 hover:bg-red-50 focus-visible:ring-red-100 dark:border-red-900 dark:text-red-400 dark:hover:bg-red-950/40 dark:focus-visible:ring-red-900/50"
@@ -250,7 +261,7 @@ function JobDetails() {
               }`}
             >
               {saved ? "♥ Remove Saved Job" : "♡ Save Job"}
-            </button>
+            </motion.button>
 
             <Link
               to="/saved"
@@ -259,7 +270,7 @@ function JobDetails() {
               View saved jobs
             </Link>
           </div>
-        </article>
+        </motion.article>
       </div>
     </main>
   );

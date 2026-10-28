@@ -1,5 +1,30 @@
 
+import { motion, AnimatePresence } from "motion/react";
 import JobCard from "./JobCard.jsx";
+
+const containerVariants = {
+  hidden: {},
+  visible: {
+    transition: {
+      staggerChildren: 0.08,
+    },
+  },
+};
+
+const itemVariants = {
+  hidden: {
+    opacity: 0,
+    y: 14,
+  },
+  visible: {
+    opacity: 1,
+    y: 0,
+    transition: {
+      duration: 0.3,
+      ease: "easeOut",
+    },
+  },
+};
 
 function JobList({ jobs = [], loading = false, error = "" }) {
   // Loading skeletons
@@ -41,7 +66,10 @@ function JobList({ jobs = [], loading = false, error = "" }) {
   // Error state
   if (error) {
     return (
-      <div
+      <motion.div
+        initial={{ opacity: 0, y: 8 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.25 }}
         role="alert"
         className="rounded-2xl border border-red-200 bg-red-50 px-4 py-12 text-center dark:border-red-900 dark:bg-red-950/40 sm:px-6"
       >
@@ -63,14 +91,19 @@ function JobList({ jobs = [], loading = false, error = "" }) {
         <p className="mt-2 text-sm text-red-600 dark:text-red-300">
           Please refresh the page and try again.
         </p>
-      </div>
+      </motion.div>
     );
   }
 
   // Empty state
   if (!Array.isArray(jobs) || jobs.length === 0) {
     return (
-      <div className="rounded-2xl border border-dashed border-border bg-white px-4 py-16 text-center dark:border-slate-700 dark:bg-slate-900 sm:px-6">
+      <motion.div
+        initial={{ opacity: 0, y: 8 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.25 }}
+        className="rounded-2xl border border-dashed border-border bg-white px-4 py-16 text-center dark:border-slate-700 dark:bg-slate-900 sm:px-6"
+      >
         <div
           className="mx-auto mb-4 flex h-14 w-14 items-center justify-center rounded-full bg-slate-100 text-2xl dark:bg-slate-800"
           aria-hidden="true"
@@ -86,20 +119,32 @@ function JobList({ jobs = [], loading = false, error = "" }) {
           Try another keyword or adjust your filters to discover more
           opportunities.
         </p>
-      </div>
+      </motion.div>
     );
   }
 
-  // Job listings
+  // Animated job listings
   return (
-    <div
-      className="grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-3"
-      aria-label="Job listings"
-    >
-      {jobs.map((job) => (
-        <JobCard key={job.id} job={job} />
-      ))}
-    </div>
+    <AnimatePresence mode="wait">
+      <motion.div
+        key={jobs.map((job) => job.id).join("-")}
+        variants={containerVariants}
+        initial="hidden"
+        animate="visible"
+        className="grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-3"
+        aria-label="Job listings"
+      >
+        {jobs.map((job) => (
+          <motion.div
+            key={job.id}
+            variants={itemVariants}
+            className="min-w-0"
+          >
+            <JobCard job={job} />
+          </motion.div>
+        ))}
+      </motion.div>
+    </AnimatePresence>
   );
 }
 

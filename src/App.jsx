@@ -1,5 +1,6 @@
 
-import { BrowserRouter, Routes, Route, Link } from "react-router-dom";
+import { BrowserRouter, Routes, Route, Link, useLocation } from "react-router-dom";
+import { AnimatePresence, motion } from "motion/react";
 
 import Home from "./assets/pages/Home.jsx";
 import JobDetails from "./assets/pages/JobDetails.jsx";
@@ -33,13 +34,23 @@ function NotFound() {
   );
 }
 
-function AppLayout() {
-  return (
-    <div className="flex min-h-screen flex-col bg-surface text-heading">
-      <Navbar />
+function AnimatedRoutes() {
+  const location = useLocation();
 
-      <main className="flex-1">
-        <Routes>
+  return (
+    <AnimatePresence mode="wait" initial={false}>
+      <motion.div
+        key={location.pathname}
+        className="flex-1"
+        initial={{ opacity: 0, y: 8 }}
+        animate={{ opacity: 1, y: 0 }}
+        exit={{ opacity: 0, y: -4 }}
+        transition={{
+          duration: 0.25,
+          ease: "easeOut",
+        }}
+      >
+        <Routes location={location}>
           {/* Public routes */}
           <Route path="/" element={<Home />} />
           <Route path="/jobs/:id" element={<JobDetails />} />
@@ -56,6 +67,18 @@ function AppLayout() {
           {/* 404 route */}
           <Route path="*" element={<NotFound />} />
         </Routes>
+      </motion.div>
+    </AnimatePresence>
+  );
+}
+
+function AppLayout() {
+  return (
+    <div className="flex min-h-screen flex-col bg-surface text-heading">
+      <Navbar />
+
+      <main className="flex flex-1 flex-col">
+        <AnimatedRoutes />
       </main>
 
       <Footer />
